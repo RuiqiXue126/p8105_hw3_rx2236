@@ -5,6 +5,13 @@ date: "2023-10-11"
 output: github_document
 ---
 
+```{r}
+library(tidyverse)
+library(ggridges)
+library(patchwork)
+```
+
+
 ## Problem 1
 ```{r}
 library(p8105.datasets)
@@ -72,12 +79,45 @@ instacart |>
 
 
 ## Problem 2
-
+Import data
 ```{r}
-
+library(p8105.datasets)
+data("brfss_smart2010")
 ```
 
+Clean the dataset
+```{r}
+brfss_smart2010 =
+  brfss_smart2010 |> 
+  as_tibble() |>
+  janitor::clean_names()
 
+brfss_oh = 
+  filter(brfss_smart2010, topic == "Overall Health")
+ 
+```
+
+Check values of `response`
+```{r}
+print(unique(brfss_oh$response))
+```
+
+Keep cleaning the data
+```{r}
+brfss_oh = 
+  filter(brfss_oh, response == "Excellent" |
+           response == "Very good" |
+           response == "Good" |
+           response == "Fair" |
+           response == "Poor")
+
+
+response_vector = pull(brfss_oh, response)
+
+response_factor = factor(response_vector, 
+                         levels = c("Poor", "Fair", "Good", "Very good", "Excellent"),
+                         ordered = TRUE)
+```
 
 
 

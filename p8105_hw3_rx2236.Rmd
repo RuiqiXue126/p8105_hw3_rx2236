@@ -90,7 +90,9 @@ Clean the dataset
 brfss_smart2010 =
   brfss_smart2010 |> 
   as_tibble() |>
-  janitor::clean_names()
+  janitor::clean_names() |>
+  rename("location_abbr" = "locationabbr") |>
+  rename("location_desc" = "locationdesc")
 
 brfss_oh = 
   filter(brfss_smart2010, topic == "Overall Health")
@@ -119,12 +121,43 @@ response_factor = factor(response_vector,
                          ordered = TRUE)
 ```
 
+Check which states were observed at 7 or more locations in 2002 and 2010.
 
+```{r}
+county_2002 = brfss_oh |>  
+  filter(year == 2002) |> 
+  group_by(location_abbr, location_desc) |> 
+  summarise()
+  
 
+county_2002 = county_2002 |> 
+  group_by(location_abbr) |> 
+  summarise(count = n()) |> 
+  filter(count >=7) 
 
+print(county_2002)
 
+```
 
+The states that were observed at 7 or more locations in 2002 are: `r county_2002$location_abbr`.
 
+```{r}
+county_2010 = brfss_oh |>  
+  filter(year == 2010) |> 
+  group_by(location_abbr, location_desc) |> 
+  summarise()
+  
+
+county_2010 = county_2010 |> 
+  group_by(location_abbr) |> 
+  summarise(count = n()) |> 
+  filter(count >=7) 
+
+print(county_2010)
+
+```
+
+Similarly, we get states that were observed at 7 or more locations in 2010: `r county_2010$location_abbr`.
 
 
 

@@ -275,15 +275,31 @@ Females in "high school equivalent" category tend to have higher age than males,
 
 
 Aggregate across minutes to create a total activity variable for each participant.
-
+Plot these total activities (y-axis) against age (x-axis).
 ```{r}
 merged_df2 |>
-  group_by(seqn, age, education) |>
-  summarise(total = sum(mims_value)) 
+  group_by(seqn, sex, age, education) |>
+  summarise(total_activity = sum(mims_value)) |>
+  ggplot(aes(x = age, y = total_activity, color = sex)) +
+  geom_point(alpha = .7) +
+  geom_smooth(se = FALSE) +
+  theme(legend.position = "bottom") +
+  facet_grid(~education) +
+  labs(
+    title = "Total Activities Against Age for Female and Male at Each Education Category",
+    x = "Age",
+    y = "Total Activity",
+    color = "Sex"
+  ) 
   
 ```
+For all education categories, people tend to have lower total activity of a 24-hour day when getting older.
 
+For "high school equivalent" category, the difference between female and male of total activity is more obvious than the other two categories. 
 
+In "less than high school" category, male tend to have higher total activity than female, while in the other two categories this relationship is reversed.
+
+In "more than high school" category, both female and male tend to have lower total activity at their early life compared to the other two education categories.
 
 
 

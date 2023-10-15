@@ -204,7 +204,9 @@ NY_response |>
     color = "Location"
   ) 
 ```
+From this plot, we can see that in both years of 2006 and 2010, for response "poor" and "fair", the value of behavioral health risk are low, while for "good" and "very good" the values are highest. However, for response "excellent", the values are lower than the ones of "good" and "very good". 
 
+Among counties in NY state, the values for "poor" response are compact, and for "good" and "very good" responses, the values are more dispersed.
 
 ## Problem 3
 

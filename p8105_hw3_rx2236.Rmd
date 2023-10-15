@@ -112,7 +112,7 @@ brfss_oh =
            response == "Good" |
            response == "Fair" |
            response == "Poor") |>
-  mutate(response, factor(response, levels = c("Poor", "Fair", "Good", "Very good", "Excellent"),
+  mutate(response = factor(response, levels = c("Poor", "Fair", "Good", "Very good", "Excellent"),
                          ordered = TRUE))
 
 
@@ -273,6 +273,15 @@ merged_df |>
 
 Females in "high school equivalent" category tend to have higher age than males, while females in "more than high school" tend to have lower average age than males.
 
+
+Aggregate across minutes to create a total activity variable for each participant.
+
+```{r}
+merged_df2 |>
+  group_by(seqn, age, education) |>
+  summarise(total = sum(mims_value)) 
+  
+```
 
 
 
